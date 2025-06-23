@@ -12,31 +12,29 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const pageFlip = new PageFlip(
-        document.getElementById("magazine"),
-        {
-          width: 800,
-          height: 500,
-          size: 'fixed',
-          mobileScrollSupport: true,
-          maxShadowOpacity: 0.5,
-          showCover: true
-        }
-      );
+    const pageFlip = new PageFlip(
+      document.getElementById("magazine"),
+      {
+        width: 800,
+        height: 500,
+        size: 'fixed',
+        mobileScrollSupport: true,
+        maxShadowOpacity: 0.5,
+        showCover: true
+      }
+    );
 
-      pageFlip.loadFromImages([
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd0809b262ce48c80f_Cover.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd2fffbfc8f608f90f_Nurocintra%20Ad.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bddec76eb8521459458_Mayor%20Message.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd374c17b58d2a1130_Harvest%20Fest%201.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd422594a035806553_Harvest%20Fest%202.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd374c17b58d2a1133_Center%20Fold%201.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bddfd8f1f01f95d085f_Center%20Fold%202.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bddd096aa716bedf14d_Nuromax%20Artical%201.png',
-        'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd8d06788c221f2738_Nuromax%20Artical%202.png'
-      ]);
-    });
+    pageFlip.loadFromImages([
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd0809b262ce48c80f_Cover.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd2fffbfc8f608f90f_Nurocintra%20Ad.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bddec76eb8521459458_Mayor%20Message.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd374c17b58d2a1130_Harvest%20Fest%201.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd422594a035806553_Harvest%20Fest%202.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd374c17b58d2a1133_Center%20Fold%201.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bddfd8f1f01f95d085f_Center%20Fold%202.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bddd096aa716bedf14d_Nuromax%20Artical%201.png',
+      'https://cdn.prod.website-files.com/683ded281baf276371786e59/68598bdd8d06788c221f2738_Nuromax%20Artical%202.png'
+    ]);
   </script>
 </body>
 </html>
