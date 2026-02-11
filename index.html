@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wellspring Magazine</title>
+
+  <style>
+    /* Prevent any scrolling INSIDE the iframe document */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden !important;           /* ⛔ no inner scrollbars */
+      overscroll-behavior: none;
+    }
+
+    /* Stage: locks content to viewport and clips any overflow during flip */
+    #stage {
+      position: fixed;                        /* lock to iframe viewport */
+      inset: 0;                               /* top/right/bottom/left = 0 */
+      overflow: hidden;                       /* hard-clip overflow */
+      display: flex;
+      justify-content: center;                /* center horizontally */
+      align-items: flex-start;                /* top align (removes big top gap) */
+      background: transparent;
+    }
+
+    * { box-sizing: border-box; }
+
+    #magazine {
+      background: transparent;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #magazine div {
+      width: 100%;
+      height: 100%;
+      background-size: cover;                 /* keeps flip alignment */
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage">
+    <div id="magazine">
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68effd0a4639237f70a27ef5_2e0b015515d2e9ca9c01a841e4bf5f59_Cover.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f14b5b0f4ee4d06526d504_b59d368569e01e8e33b931c57ce51ef2_Page%202%20Nuromax%20Ad.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f149e01cfe72aba9f0e4a5_8110140b87ddfd4c07ef011c6c1953d0_Page%203%20Synopsis.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f55f25eb55f721a4dfe124_d78798f7466f6c2301a44d3cefb1b7d9_Page%209%20Island_Festival.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f55f24f990d5665ec26c5e_bb453b81c9cf2d05028ac7c8d2416449_Page%2010%20Island_Festival.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f55f248a605210ed4f560c_e3b8b62f69daab7e9c1e172f390094f9_Page%204%20Rena.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f2c8a286a5658f02319360_865d42c0ccc0e3e51f48bbbfeb62ee91_Page%205%20Tal.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f2c8a25ed81476c54b9eeb_0cb2787072a8691aa8cd047429798a12_Page%206%20More%20Char.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f2d7fafe9b74dbfbd35ac6_5a73b96e6fb0b45ac7114500ef55d7f5_Page%207%20More%20Char.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f2dd4d628611297f6229dd_2f20cb59428b14dbd701c4a7868b41cc_Page%208%20More%20Char.png');"></div>
+      <div style="background-image: url('https://cdn.prod.website-files.com/683ded281baf276371786e59/68f56a471786b90b4c2b8b4a_43b1e7bc70a6f185d07aa7f51a85e4f1_Page%2011%20Tahnk%20you.png');"></div>
+    </div>
+  </div>
+
+  <!-- Local copies sitting in your repo root -->
+  <script src="jquery-3.7.1.min.js"></script>
+  <script src="turn.js"></script>
+
+  <script>
+    $(function () {
+      const magazine = $('#magazine');
+      let lastMode = window.innerWidth >= 567 ? 'desktop' : 'mobile';
+
+      function setupFlipbook(mode) {
+        if (magazine.data('turn')) {
+          magazine.turn('destroy').removeClass('turnjs');
+        }
+
+        if (mode === 'mobile') {
+          // Fixed single page size on mobile
+          magazine.css({ width: '300px', height: '450px' });
+          magazine.turn({
+            width: 300,
+            height: 450,
+            display: 'single',
+            autoCenter: true,
+            acceleration: true,
+            gradients: true,
+            elevation: 50
+          });
+        } else {
+          // Responsive double spread on desktop
+          const aspect = 4 / 3;
+          let ww = Math.min(window.innerWidth * 0.95, 1400);
+          let wh = window.innerHeight * 0.85;
+          let w = ww;
+          let h = w / aspect;
+          if (h > wh) { h = wh; w = h * aspect; }
+
+          magazine.css({ width: w + 'px', height: h + 'px' });
+          magazine.turn({
+            width: w,
+            height: h,
+            display: 'double',
+            autoCenter: true,
+            acceleration: true,
+            gradients: true,
+            elevation: 50
+          });
+        }
+      }
+
+      setupFlipbook(lastMode);
+
+      // Keyboard nav
+      $(window).on('keydown', function (e) {
+        if (e.keyCode === 37) magazine.turn('previous');
+        else if (e.keyCode === 39) magazine.turn('next');
+      });
+
+      // Reload only when crossing the mobile/desktop breakpoint
+      $(window).on('resize', function () {
+        const currentMode = window.innerWidth >= 768 ? 'desktop' : 'mobile';
+        if (currentMode !== lastMode) location.reload();
+      });
+
+      // Click anywhere to flip: left = prev, right = next
+      magazine.on('click', function (e) {
+        const x = e.pageX - magazine.offset().left;
+        const midpoint = magazine.width() / 2;
+        if (x < midpoint) magazine.turn('previous');
+        else magazine.turn('next');
+      });
+    });
+  </script>
+
+</body>
+</html>
