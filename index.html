@@ -14,7 +14,7 @@
       height: 100%;
       background: transparent;
       overflow: hidden !important;           /* ⛔ no inner scrollbars */
-      overscroll-behavior: none;
+      overscroll-behavior: auto;
     }
 
     /* Stage: locks content to viewport and clips any overflow during flip */
@@ -32,7 +32,7 @@
 
     #magazine {
       background: transparent;
-      touch-action: manipulation;
+      touch-action: pan-y;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
